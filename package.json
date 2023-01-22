@@ -10,9 +10,10 @@
   "dependencies": {
     "@react-three/drei": "^9.5.0",
     "@react-three/fiber": "^8.0.12",
+    "@types/three": "^0.148.0",
     "autoprefixer": "^10.4.4",
     "gsap": "^3.10.3",
-    "jotai": "^1.6.6",
+    "jotai": "^1.13.1",
     "postcss": "^8.4.12",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
