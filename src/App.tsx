@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import { Canvas } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { type SquareType, SquareAtom, MoveCountAtom, PlayerAtom } from "./stores/Atom"
 import { useAtomValue, useAtom } from "jotai"
 import { HeaderScene } from "./components/HeaderScene"
 import { Board } from "./components/Board"
+import { easing } from "maath"
 
 export default function App() {
   const [states, setStates] = useAtom(SquareAtom)
@@ -44,6 +45,9 @@ export default function App() {
         <HeaderScene />
         <Board />
 
+        {/* Camera movements */}
+        <CameraRig />
+
         {/* <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} /> */}
       </Canvas>
       <div className="text-16 font-bold">
@@ -81,5 +85,13 @@ function calculateWinner({ states, moves }: CalculateWinnerType) {
       return "draw"
     }
   }
+  return null
+}
+
+function CameraRig(): null {
+  useFrame((state, delta) => {
+    easing.damp3(state.camera.position, [(state.pointer.x * state.viewport.width) / 3, (1 + state.pointer.y) / 2, 40], 0.2, delta)
+    state.camera.lookAt(0, 0, 0)
+  })
   return null
 }
